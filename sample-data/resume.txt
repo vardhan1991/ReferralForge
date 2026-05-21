@@ -1,0 +1,15 @@
+Dexter Example
+dexter@example.com
+
+Summary
+Senior QA automation engineer with Playwright, Python, TypeScript, API testing, Docker, CI/CD, and leadership experience.
+
+Experience
+Lead SDET at ExampleSoft
+Jan 2021 - Present
+- Built Playwright automation framework that reduced regression time by 45%
+- Led API testing standards across 4 product squads
+- Improved CI/CD quality gates for release confidence
+
+Education
+Example University

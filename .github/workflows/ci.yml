@@ -1,0 +1,19 @@
+name: ReferralForge CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: cd referralforge && npm ci
+      - run: cd referralforge && npm run typecheck
+      - run: cd referralforge && npm run lint
+      - run: cd referralforge && npm run test
+      - run: cd referralforge && npm run build

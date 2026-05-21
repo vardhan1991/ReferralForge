@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String        @id @default(cuid())
+  email           String        @unique
+  name            String?
+  optedInResume   Boolean       @default(false)
+  profile         ProfileMemory?
+  jobs            Job[]
+  resumes         Resume[]
+  applications    Application[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model ProfileMemory {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  careerHistory       Json
+  skills              String[]
+  preferredRoles      String[]
+  leadershipExamples  String[]
+  techStack           String[]
+  achievements        String[]
+  preferredLocations  String[]
+  salaryExpectations  String?
+  portfolioLinks      Json
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Job {
+  id               String        @id @default(cuid())
+  userId           String?
+  user             User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  source           String
+  sourceUrl        String?
+  title            String
+  company          String
+  location         String
+  seniority        Json
+  skills           Json
+  responsibilities String[]
+  qualifications   String[]
+  keywords         String[]
+  atsTerms         String[]
+  rawTextHash      String
+  structured       Json
+  analyses         Analysis[]
+  applications     Application[]
+  createdAt        DateTime      @default(now())
+}
+
+model Resume {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String
+  rawTextHash    String
+  structured     Json
+  retainedRaw    Boolean       @default(false)
+  encryptedRaw   String?
+  analyses       Analysis[]
+  applications   Application[]
+  createdAt      DateTime      @default(now())
+}
+
+model Analysis {
+  id          String   @id @default(cuid())
+  jobId       String
+  resumeId    String
+  job         Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  resume      Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  scores      Json
+  heatmap     Json
+  recommendations String[]
+  tokenUsage  Json?
+  createdAt   DateTime @default(now())
+}
+
+model Contact {
+  id                  String   @id @default(cuid())
+  company             String
+  name                String
+  title               String
+  team                String
+  source              String
+  relationship        String
+  confidence          Float
+  referralUsefulness  Int
+  responseLikelihood  Int
+  profileUrl          String?
+  metadata            Json
+  createdAt           DateTime @default(now())
+}
+
+model Application {
+  id              String   @id @default(cuid())
+  userId          String
+  jobId           String
+  resumeId        String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job             Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  resume          Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  stage           String
+  outreachStatus  String
+  referralStatus  String
+  resumeVersion   String
+  notes           String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

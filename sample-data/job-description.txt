@@ -1,0 +1,11 @@
+Senior SDET Test Architect
+Company: Acme Cloud
+Location: Bengaluru Hybrid
+
+Responsibilities
+- Lead Playwright automation, API testing, CI/CD quality gates, and test architecture
+- Partner with engineering managers on release reliability metrics
+- Improve flaky test detection and regression cycle time
+
+Qualifications
+- Python, TypeScript, Playwright, Docker, PostgreSQL, leadership, performance testing

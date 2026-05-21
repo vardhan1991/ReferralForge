@@ -1,0 +1,39 @@
+{
+  "name": "referralforge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ReferralForge full-stack MVP for job/resume optimization, referral discovery, outreach, and application tracking.",
+  "type": "module",
+  "scripts": {
+    "dev": "node --experimental-strip-types src/server.ts",
+    "build": "node scripts/validate.mjs",
+    "start": "node --experimental-strip-types src/server.ts",
+    "typecheck": "node scripts/typecheck-lite.mjs",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --experimental-strip-types scripts/run-tests.mjs tests/job-parser.test.ts tests/resume-parser.test.ts tests/match-engine.test.ts tests/rewrite-outreach.test.ts",
+    "e2e": "node --experimental-strip-types scripts/run-tests.mjs tests/e2e/api-flow.test.ts",
+    "seed": "node --experimental-strip-types scripts/seed.ts",
+    "validate": "node scripts/validate.mjs",
+    "docker:validate": "docker compose config"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "framer-motion": "^12.15.0",
+    "next": "^15.3.2",
+    "openai": "^4.103.0",
+    "playwright": "^1.59.1",
+    "prisma": "^6.8.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "redis": "^4.7.0",
+    "tailwindcss": "^3.4.17",
+    "zod": "^3.25.42",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "@types/react": "^19.1.6",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
+  }
+}

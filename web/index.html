@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ReferralForge</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">R</div>
+          <div>
+            <strong>ReferralForge</strong>
+            <span>Application intelligence</span>
+          </div>
+        </div>
+        <nav>
+          <a href="#workspace" class="active">Workspace</a>
+          <a href="#analysis">Match</a>
+          <a href="#referrals">Referrals</a>
+          <a href="#tracker">Tracker</a>
+        </nav>
+        <button id="commandButton" class="ghost-button" type="button">Command palette</button>
+        <button id="themeButton" class="ghost-button" type="button" aria-label="Toggle theme">Toggle theme</button>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Referral-first job search OS</p>
+            <h1>Tailor the application. Find the warmest path in.</h1>
+          </div>
+          <div class="status-pill" id="healthStatus">Checking API</div>
+        </header>
+
+        <section id="workspace" class="workspace-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Job intake</p>
+                <h2>Parse a posting</h2>
+              </div>
+              <span class="badge">LinkedIn · Indeed · FoundIt · Raw</span>
+            </div>
+            <label>Job URL</label>
+            <input id="jobUrl" placeholder="https://www.linkedin.com/jobs/view/..." />
+            <label>Raw job description</label>
+            <textarea id="jobText" rows="9" placeholder="Paste the visible job description, requirements, and responsibilities"></textarea>
+            <label class="file-drop">
+              <input id="jobFile" type="file" accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg,.webp" />
+              <span>Upload JD PDF, doc, or screenshot</span>
+            </label>
+            <button id="parseJob" class="primary-button" type="button">Parse job</button>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Resume intelligence</p>
+                <h2>Parse candidate profile</h2>
+              </div>
+              <span class="badge">No raw resume retention by default</span>
+            </div>
+            <label>Resume text</label>
+            <textarea id="resumeText" rows="12" placeholder="Paste resume text or upload a resume file"></textarea>
+            <label class="file-drop">
+              <input id="resumeFile" type="file" accept=".pdf,.doc,.docx,.txt" />
+              <span>Upload resume PDF/DOCX/TXT</span>
+            </label>
+            <button id="parseResume" class="primary-button" type="button">Parse resume</button>
+          </article>
+        </section>
+
+        <section id="analysis" class="analysis-grid">
+          <article class="score-card">
+            <div>
+              <p class="eyebrow">Match score</p>
+              <h2 id="scoreValue">--</h2>
+            </div>
+            <button id="runAnalysis" class="primary-button" type="button">Analyze fit</button>
+            <div id="scoreBreakdown" class="metric-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">ATS heatmap</p>
+                <h2>Keyword overlap and gaps</h2>
+              </div>
+              <select id="rewriteTone" aria-label="Rewrite tone">
+                <option value="concise">Concise</option>
+                <option value="executive">Executive</option>
+                <option value="technical">Technical</option>
+                <option value="leadership">Leadership</option>
+              </select>
+            </div>
+            <div id="heatmap" class="heatmap empty">Run analysis to see coverage</div>
+            <button id="runRewrite" class="secondary-button" type="button">Generate guarded rewrites</button>
+            <div id="rewriteOutput" class="stack"></div>
+          </article>
+        </section>
+
+        <section id="referrals" class="workspace-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Referral engine</p>
+                <h2>Rank warm contacts</h2>
+              </div>
+              <button id="findReferrals" class="secondary-button" type="button">Find contacts</button>
+            </div>
+            <div id="contacts" class="contact-list empty">Contacts appear here after parsing a job and resume.</div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Outreach</p>
+                <h2>Personalized message</h2>
+              </div>
+              <select id="messageType" aria-label="Message type">
+                <option value="linkedin_dm">LinkedIn DM</option>
+                <option value="cold_email">Cold email</option>
+                <option value="referral_ask">Referral ask</option>
+                <option value="follow_up">Follow-up</option>
+                <option value="alumni_networking">Alumni</option>
+              </select>
+            </div>
+            <button id="generateOutreach" class="primary-button" type="button">Generate message</button>
+            <div id="outreachOutput" class="message-card empty">Select a contact to generate outreach.</div>
+          </article>
+        </section>
+
+        <section id="tracker" class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Pipeline</p>
+              <h2>Application tracker</h2>
+            </div>
+            <button id="refreshTracker" class="secondary-button" type="button">Refresh</button>
+          </div>
+          <div id="kanban" class="kanban"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="commandDialog" class="command-dialog">
+      <input id="commandInput" placeholder="Type parse, analyze, referrals, outreach, theme..." />
+      <div class="command-list">
+        <button data-command="parse">Parse both</button>
+        <button data-command="analyze">Analyze fit</button>
+        <button data-command="referrals">Find referrals</button>
+        <button data-command="outreach">Generate outreach</button>
+        <button data-command="theme">Toggle theme</button>
+      </div>
+    </dialog>
+
+    <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
