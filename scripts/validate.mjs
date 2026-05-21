@@ -16,7 +16,7 @@ const commands = [
 
 for (const [cmd, args] of commands) {
   console.log(`\n> ${cmd} ${args.join(" ")}`);
-  const result = spawnSync(cmd, args, { stdio: "inherit", shell: true });
+  const result = spawnSync(cmd, args, { stdio: "inherit", shell: false });
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 console.log("\nReferralForge validation passed");

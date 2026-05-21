@@ -1,0 +1,12 @@
+node_modules/
+.next/
+dist/
+coverage/
+playwright-report/
+test-results/
+artifacts/
+server.out
+server.err
+data/*.store.json
+.env
+.env.local
